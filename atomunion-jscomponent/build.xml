@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="atomunion-jsrt" basedir="." default="">
+
+	<property name="project.name" value="${project.artifactId}" />
+
+	<property name="app.dir" location="${basedir}" />
+	<property name="current.dir" location="${ant.file}" />
+
+	<property name="build.dir" location="build" />
+	<property name="webapp.dir" location="${basedir}/src/main/webapp"/>
+	<property name="webinf.dir" location="${webapp.dir}/WEB-INF" />
+	<property name="devjs.dir" location="${webapp.dir}/dev/js" />
+	<property name="classpath.dir" location="${webinf.dir}/classes" />
+	<property name="compile.dir" location="${basedir}/target" />
+
+	<target name="atomunion-jsloading">
+		<echo message="===================================================================">
+		</echo>
+		<echo message="target : atomunion-jsloading">
+		</echo>
+		<echo message="===================================================================">
+		</echo>
+
+		<delete dir="${app.dir}/atomunion-jsloading/target/js">
+		</delete>
+		<mkdir dir="${app.dir}/atomunion-jsloading/target/js/atomunion-jsloading/master" />
+		<mkdir dir="${app.dir}/atomunion-jsloading/target/js/atomunion-jsloading/${project.version}" />
+
+		<copy todir="${app.dir}/atomunion-jsloading/target/js/atomunion-jsloading/master/src">
+			<fileset dir="${app.dir}/atomunion-jsloading/src/main/js/" />
+		</copy>
+		<copy todir="${app.dir}/atomunion-jsloading/target/js/atomunion-jsloading/master">
+			<fileset dir="${app.dir}/atomunion-jsloading/src/main">
+				<include name="css/**" />
+				<include name="images/**" />
+				<exclude name="js/**" />
+			</fileset>
+		</copy>
+
+		<copy todir="${app.dir}/atomunion-jsloading/target/js/atomunion-jsloading/${project.version}">
+			<fileset dir="${app.dir}/atomunion-jsloading/target/js/atomunion-jsloading/master/" />
+		</copy>
+
+		<delete dir="${app.dir}/atomunion-jsloading/src/main/webapp/dev/js/atomunion-jsloading/master" />
+		<mkdir dir="${app.dir}/atomunion-jsloading/src/main/webapp/dev/js/atomunion-jsloading/master" />
+		<copy todir="${app.dir}/atomunion-jsloading/src/main/webapp/dev/js/atomunion-jsloading/master">
+			<fileset dir="${app.dir}/atomunion-jsloading/target/js/atomunion-jsloading/master/" />
+		</copy>
+	</target>
+	<target name="atomunion-jsdialog">
+		<echo message="===================================================================">
+		</echo>
+		<echo message="target : atomunion-jsdialog">
+		</echo>
+		<echo message="===================================================================">
+		</echo>
+
+		<delete dir="${app.dir}/atomunion-jsdialog/target/js">
+		</delete>
+		<mkdir dir="${app.dir}/atomunion-jsdialog/target/js/atomunion-jsdialog/master" />
+		<mkdir dir="${app.dir}/atomunion-jsdialog/target/js/atomunion-jsdialog/${project.version}" />
+
+		<copy todir="${app.dir}/atomunion-jsdialog/target/js/atomunion-jsdialog/master/src">
+			<fileset dir="${app.dir}/atomunion-jsdialog/src/main/js/" />
+		</copy>
+		<copy todir="${app.dir}/atomunion-jsdialog/target/js/atomunion-jsdialog/master">
+			<fileset dir="${app.dir}/atomunion-jsdialog/src/main">
+				<include name="css/**" />
+				<include name="images/**" />
+				<exclude name="js/**" />
+			</fileset>
+		</copy>
+
+		<copy todir="${app.dir}/atomunion-jsdialog/target/js/atomunion-jsdialog/${project.version}">
+			<fileset dir="${app.dir}/atomunion-jsdialog/target/js/atomunion-jsdialog/master/" />
+		</copy>
+
+		<delete dir="${app.dir}/atomunion-jsdialog/src/main/webapp/dev/js/atomunion-jsdialog/master" />
+		<mkdir dir="${app.dir}/atomunion-jsdialog/src/main/webapp/dev/js/atomunion-jsdialog/master" />
+		<copy todir="${app.dir}/atomunion-jsdialog/src/main/webapp/dev/js/atomunion-jsdialog/master">
+			<fileset dir="${app.dir}/atomunion-jsdialog/target/js/atomunion-jsdialog/master/" />
+		</copy>
+	</target>
+	<target name="atomunion-jsmsgbox">
+		<echo message="===================================================================">
+		</echo>
+		<echo message="target : atomunion-jsmsgbox">
+		</echo>
+		<echo message="===================================================================">
+		</echo>
+
+		<delete dir="${app.dir}/atomunion-jsmsgbox/target/js">
+		</delete>
+		<mkdir dir="${app.dir}/atomunion-jsmsgbox/target/js/atomunion-jsmsgbox/master" />
+		<mkdir dir="${app.dir}/atomunion-jsmsgbox/target/js/atomunion-jsmsgbox/${project.version}" />
+
+		<copy todir="${app.dir}/atomunion-jsmsgbox/target/js/atomunion-jsmsgbox/master/src">
+			<fileset dir="${app.dir}/atomunion-jsmsgbox/src/main/js/" />
+		</copy>
+		<copy todir="${app.dir}/atomunion-jsmsgbox/target/js/atomunion-jsmsgbox/master">
+			<fileset dir="${app.dir}/atomunion-jsmsgbox/src/main">
+				<include name="css/**" />
+				<include name="images/**" />
+				<exclude name="js/**" />
+			</fileset>
+		</copy>
+
+		<copy todir="${app.dir}/atomunion-jsmsgbox/target/js/atomunion-jsmsgbox/${project.version}">
+			<fileset dir="${app.dir}/atomunion-jsmsgbox/target/js/atomunion-jsmsgbox/master/" />
+		</copy>
+
+		<delete dir="${app.dir}/atomunion-jsmsgbox/src/main/webapp/dev/js/atomunion-jsmsgbox/master" />
+		<mkdir dir="${app.dir}/atomunion-jsmsgbox/src/main/webapp/dev/js/atomunion-jsmsgbox/master" />
+		<copy todir="${app.dir}/atomunion-jsmsgbox/src/main/webapp/dev/js/atomunion-jsmsgbox/master">
+			<fileset dir="${app.dir}/atomunion-jsmsgbox/target/js/atomunion-jsmsgbox/master/" />
+		</copy>
+	</target>
+	<target name="atomunion-jsstore">
+		<echo message="===================================================================">
+		</echo>
+		<echo message="target : atomunion-jsstore">
+		</echo>
+		<echo message="===================================================================">
+		</echo>
+
+		<delete dir="${app.dir}/atomunion-jsstore/target/js">
+		</delete>
+		<mkdir dir="${app.dir}/atomunion-jsstore/target/js/atomunion-jsstore/master" />
+		<mkdir dir="${app.dir}/atomunion-jsstore/target/js/atomunion-jsstore/${project.version}" />
+
+		<copy todir="${app.dir}/atomunion-jsstore/target/js/atomunion-jsstore/master/src">
+			<fileset dir="${app.dir}/atomunion-jsstore/src/main/js/" />
+		</copy>
+		<copy todir="${app.dir}/atomunion-jsstore/target/js/atomunion-jsstore/master">
+			<fileset dir="${app.dir}/atomunion-jsstore/src/main">
+				<include name="css/**" />
+				<include name="images/**" />
+				<exclude name="js/**" />
+			</fileset>
+		</copy>
+
+		<copy todir="${app.dir}/atomunion-jsstore/target/js/atomunion-jsstore/${project.version}">
+			<fileset dir="${app.dir}/atomunion-jsstore/target/js/atomunion-jsstore/master/" />
+		</copy>
+
+		<delete dir="${app.dir}/atomunion-jsstore/src/main/webapp/dev/js/atomunion-jsstore/master" />
+		<mkdir dir="${app.dir}/atomunion-jsstore/src/main/webapp/dev/js/atomunion-jsstore/master" />
+		<copy todir="${app.dir}/atomunion-jsstore/src/main/webapp/dev/js/atomunion-jsstore/master">
+			<fileset dir="${app.dir}/atomunion-jsstore/target/js/atomunion-jsstore/master/" />
+		</copy>
+	</target>
+	<target name="atomunion-jstemplate">
+		<echo message="===================================================================">
+		</echo>
+		<echo message="target : atomunion-jstemplate">
+		</echo>
+		<echo message="===================================================================">
+		</echo>
+
+		<delete dir="${app.dir}/atomunion-jstemplate/target/js">
+		</delete>
+		<mkdir dir="${app.dir}/atomunion-jstemplate/target/js/atomunion-jstemplate/master" />
+		<mkdir dir="${app.dir}/atomunion-jstemplate/target/js/atomunion-jstemplate/${project.version}" />
+
+		<copy todir="${app.dir}/atomunion-jstemplate/target/js/atomunion-jstemplate/master/src">
+			<fileset dir="${app.dir}/atomunion-jstemplate/src/main/js/" />
+		</copy>
+		<copy todir="${app.dir}/atomunion-jstemplate/target/js/atomunion-jstemplate/master">
+			<fileset dir="${app.dir}/atomunion-jstemplate/src/main">
+				<include name="css/**" />
+				<include name="images/**" />
+				<exclude name="js/**" />
+			</fileset>
+		</copy>
+
+
+		<copy todir="${app.dir}/atomunion-jstemplate/target/js/atomunion-jstemplate/${project.version}">
+			<fileset dir="${app.dir}/atomunion-jstemplate/target/js/atomunion-jstemplate/master/" />
+		</copy>
+
+		<delete dir="${app.dir}/atomunion-jstemplate/src/main/webapp/dev/js/atomunion-jstemplate/master" />
+		<mkdir dir="${app.dir}/atomunion-jstemplate/src/main/webapp/dev/js/atomunion-jstemplate/master" />
+		<copy todir="${app.dir}/atomunion-jstemplate/src/main/webapp/dev/js/atomunion-jstemplate/master">
+			<fileset dir="${app.dir}/atomunion-jstemplate/target/js/atomunion-jstemplate/master/" />
+		</copy>
+	</target>
+
+	<target name="compile" depends="atomunion-jsloading,atomunion-jsdialog,atomunion-jsmsgbox,atomunion-jsstore,atomunion-jstemplate">
+		<echo message="===================================================================" />
+		<echo message="target : atomunion-jscomponent" />
+		<echo message="===================================================================" />
+
+		<delete dir="${compile.dir}/js" />
+		<mkdir dir="${compile.dir}/js" />
+
+		<copy todir="${compile.dir}/js/atomunion-jsloading/master">
+			<fileset dir="${app.dir}/atomunion-jsloading/target/js/atomunion-jsloading/master" />
+		</copy>
+		<copy todir="${compile.dir}/js/atomunion-jsdialog/master">
+			<fileset dir="${app.dir}/atomunion-jsdialog/target/js/atomunion-jsdialog/master" />
+		</copy>
+		<copy todir="${compile.dir}/js/atomunion-jsmsgbox/master">
+			<fileset dir="${app.dir}/atomunion-jsmsgbox/target/js/atomunion-jsmsgbox/master" />
+		</copy>
+		<copy todir="${compile.dir}/js/atomunion-jsstore/master">
+			<fileset dir="${app.dir}/atomunion-jsstore/target/js/atomunion-jsstore/master" />
+		</copy>
+		<copy todir="${compile.dir}/js/atomunion-jstemplate/master">
+			<fileset dir="${app.dir}/atomunion-jstemplate/target/js/atomunion-jstemplate/master" />
+		</copy>
+
+		<delete dir="${devjs.dir}" />
+		<mkdir dir="${devjs.dir}" />
+		<copy todir="${devjs.dir}">
+			<fileset dir="${compile.dir}/js/" />
+		</copy>
+	</target>
+	
+</project>

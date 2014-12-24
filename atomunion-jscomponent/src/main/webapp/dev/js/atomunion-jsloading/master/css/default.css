@@ -1,0 +1,64 @@
+.loading {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10000000000;
+}
+
+.loading .shadow {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	filter: alpha(opacity = 68);
+	opacity: .68;
+	background-color: #e0e0e0;
+}
+
+.loading-blur {
+    -webkit-filter: blur(3px);
+    -moz-filter: blur(3px);
+    -o-filter: blur(3px);
+    -ms-filter: blur(3px);
+    filter: blur(3px);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none
+}
+
+.loading .content {
+	position: absolute;
+	top: 50%;
+	width: 100%;
+	margin-top: -70px;
+	color: gray;
+	font-family: "微软雅黑", sans-serif;
+}
+
+
+.loading .logo {
+	background: url(../images/loading.gif) no-repeat center;
+	display: block;
+	height: 120px
+}
+
+.loading .title {
+	font-size: 1.2em;
+	text-align: center;
+	white-space: nowrap;
+	padding: 8px;
+	display: block
+}
+
+.loading .desc{
+	font-size: 1em;
+	text-align: center;
+	white-space: nowrap;
+	padding: 8px;
+	display: block
+}
