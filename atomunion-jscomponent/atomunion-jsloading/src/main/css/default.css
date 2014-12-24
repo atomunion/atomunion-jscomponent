@@ -15,7 +15,7 @@
 	height: 100%;
 	filter: alpha(opacity = 68);
 	opacity: .68;
-	background-color: #e0e0e0;
+	background-color: #000;
 }
 
 .loading-blur {

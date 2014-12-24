@@ -15,52 +15,46 @@
 					ifModified : false,
 					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',// 'application/json',
 					error : function(xhr, textStatus, error) {
-						alert('Request error ! Error message:' + textStatus);
-						throw error;
+						console.log('Request error ! Error message:' + textStatus);
+						//throw error;
 					},
 					statusCode : {
 						404 : function() {
-							alert('Page not found.');
+							console.log('Page not found.');
 						},
 						500 : function() {
-							alert('There is a error on server.');
+							console.log('There is a error on server.');
 						}
 					}
 				},
 				request : function(opts) {
+                    var data = null;
 					if (opts.local) {
-						var data = opts.data;
-						data || (data = {
+						data = opts.data || {
 							success : false
-						});
-						if (data.success != false) {
-							data.success = true;
-						}
-						this.getData(opts);
+						};
+						data.success = !!data.success;
+                        opts.data = data;
+						this.getData(data,opts);
 					} else if (!opts.url) {
-						alert('Please tell me you URL first!');
+						console.log('Please tell me you URL first!');
 						return;
 					} else {
 						opts.success = function(message) {
 							if (typeof message !== "string" || !message) {
-								opts.data = message;
+								data = message;
 							} else {
-								opts.data = $.parseJSON(message);
+								data = $.parseJSON(message);
 							}
-							this.getData(opts);
+                            opts.data = data;
+							this.getData(data,opts);
 						};
 						$.ajax(opts);
 					}
 				},
-				getData : function(opts) {
-					var result = opts.data;
-					if (result.success) {
-						(opts.getData || $.fn.licoStore.getData).call(
-								$.fn.licoStore, result);
-					} else {
-						alert('success:' + result.success + '\nmessage:'
-								+ result.msg);
-					}
+				getData : function(data,opts) {
+                    (opts.getData || $.fn.licoStore.getData).call(
+								$.fn.licoStore, data);
 				},
 				reload : function(opts) {
 					this.request(opts);
@@ -75,7 +69,7 @@
 		};
 
 		$.fn.licoStore.getData = function(data) {
-			alert(data);
+			console.log(data);
 		};
 
 		$.licoStore = $.fn.licoStore;

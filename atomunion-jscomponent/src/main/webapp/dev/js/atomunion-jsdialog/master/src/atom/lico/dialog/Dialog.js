@@ -1,3 +1,4 @@
+//依赖mCustomScrollbar
 (function($) {
     if (!$.fn.licoDialog) {
         var licoDialog = function() {
@@ -18,12 +19,33 @@
 
                         return fieldset;
 
-                    } else {
+                    }
+                    /*else {
                         var content = $("<div></div>");
                         $(parentNode).append(content);
                         return content;
+                    }*/
+                    return $(parentNode);
+                },
+
+                _setErrorInDialogByName: function(errors,level){
+                    var ele = this._getDialogElementByLevel(level);
+                    if(errors){
+                        for(var i in errors){
+                            if(errors.hasOwnProperty(i)){
+                                var input = ele.find("input[name='"+i+"'],select[name='"+i+"'], textarea[name='"+i+"']"),
+                                    container = input.parent(".inputContainer"),
+                                    label = container.parent("label"),
+                                    tip = label.find(".tip"),
+                                    errorE = label.find(".errormsg");
+                                label.addClass("error")
+                                tip.hide();
+                                errorE.html(errors[i]);
+                            }
+                        }
                     }
                 },
+
                 _createDomInContent : function(filedset, vr, ats) {
                     try {
 
@@ -40,18 +62,20 @@
                             };
                         }
 
-                        var inputFlag = vr.tag.name == 'input', hiddenFlag = inputFlag && vr.tag.attrs && vr.tag.attrs.type == "hidden", submitFlag = inputFlag && vr.tag.attrs && vr.tag.attrs.type == "submit", normalInput = inputFlag && !hiddenFlag && !submitFlag;
+                        var selectFlag = vr.tag.name == 'select', areaFlag = vr.tag.name == 'textarea', inputFlag = vr.tag.name == 'input' , hiddenFlag = inputFlag && vr.tag.attrs && vr.tag.attrs.type == "hidden", submitFlag = inputFlag && vr.tag.attrs && vr.tag.attrs.type == "submit",
+                            normalInput = inputFlag && !hiddenFlag && !submitFlag,
+                            normalFormField = areaFlag || selectFlag || normalInput;
 
                         var scope = this;
                         var _container = null;
-                        if (normalInput) {
+                        if (normalFormField) {
                             var tip = (vr.tip) ? vr.tip : "";
                             var label = (vr.label) ? vr.label : "";
-                            var result = '<label><div>' + label + ':<span>' + tip + '</span></div><div class="inputContainer"/></label>';
+                            var result = '<label><div>' + label + ':<span class="tip">' + tip + '</span><span class="errormsg"></span></div><div class="inputContainer"/></label>';
                             _container = $(result);
                             filedset.append(_container);
                             if (!vr.tag.attrs.css) {
-                                vr.tag.attrs.css = 'text-input';
+                                vr.tag.attrs.css = normalInput ? 'text-input' : (areaFlag ? 'text-area' : (selectFlag ? 'text-select': ''));
                             }
                         } else {
                             if (submitFlag)
@@ -95,7 +119,7 @@
                         if (hiddenFlag) {
                             _container.append(_input);
                             return;
-                        } else if (normalInput) {
+                        } else if (normalFormField) {
                             _container = _container.find(".inputContainer");
                         }
                         _container.append(_input);
@@ -115,7 +139,7 @@
                                 }
                             });
                         } else {
-                            if (normalInput) {
+                            if (normalFormField) {
                                 _input.bind('blur', function() {
                                     scope._validateContent(this);
                                 });
@@ -184,9 +208,9 @@
 
                         var buttons = vr.buttons;
                         if (buttons) {
-                            for (var b in buttons) {
-                                var button = null, method = null;
-                                switch(buttons[b]) {
+                            for (var i = 0,len = buttons.length;i < len;i++) {
+                                var b = buttons[i], button = null, method = null;
+                                switch(b) {
                                     case 'update':
                                         button = '<input type="button" value="UPDATE" class="button-input btn-update"/>';
                                         method = "POST";
@@ -200,29 +224,51 @@
                                         method = "DELETE";
                                         break;
                                     case 'create':
-                                    default:
                                         button = '<input type="button" value="CREATE" class="button-input btn-create"/>';
                                         method = "PUT";
+                                    default:
                                         break;
                                 }
-                                if (b) {
+                                if (button) {
 
                                     var _button = $(button);
-                                    _input.append("<br/>").append(_button);
+
+                                    var toolbar = $("<div class='dialogtoolbar'/>");
+                                    toolbar.appendTo(_input);
+                                    toolbar.append(_button);
                                     if (proxy) {
-                                        var p = proxy[buttons[b]];
+                                        var p = proxy[b];
                                         _button.bind("click", function() {
-                                            var data = $.extend({}, scope.getValues(_input), p.data);
+                                            var data = $.extend({"_method":method}, scope.getValues(_input), p.data);
+                                            var m = method ;
+                                            if(p.restful === false){
+                                                if(m == 'PUT'){
+                                                    m = 'POST';
+                                                }else if(m == 'DELETE'){
+                                                    m = 'GET';
+                                                }
+                                            }
+                                            p.dataType = p.dataType || "json";
+                                            if(p.dataType == "json" || p.dataType == "jsonp" || !data.format){
+                                                data.format = 'json';
+                                            }
+                                            //Content-Type:application/x-www-form-urlencoded
+                                            //Content-Type:multipart/related
+                                            //application/json;charset=utf-8
                                             $.ajax({
                                                 async : true,
-                                                type : "POST",
+                                                type : m,
                                                 url : p.url,
-                                                contentType : 'application/json;charset=utf-8',
-                                                data : JSON.stringify(data),
-                                                dataType : "json",
+                                                contentType : p.contentType || 'application/x-www-form-urlencoded',
+                                                data : p.contentType == 'application/json;charset=utf-8' ? JSON.stringify(data) : data,
+                                                dataType : p.dataType || "json",
                                                 success : function(msg) {
-                                                    if (msg.success) {
-                                                        scope._toggleDialog(ats);
+                                                    if(p.callback){
+                                                        p.callback.call(scope,ats,msg);
+                                                    }else{
+                                                        if (msg.success) {
+                                                            scope._toggleDialog(ats);
+                                                        }
                                                     }
                                                 }
                                             });
@@ -242,7 +288,7 @@
                 getValues : function(dom) {
                     var values = {};
                     if (dom) {
-                        $.each(dom.find("input,select"), function(i, n) {
+                        $.each(dom.find("input,select,textarea"), function(i, n) {
                             if (n.type != 'button') {
                                 if (n.id || n.name) {
                                     var value = null;
@@ -265,42 +311,44 @@
                     return values;
                 },
                 //TODO 整合下面的select选项
-                _loadData : function(config) {
-                    var scope = this;
-                    var setValues = function(data) {
+                _loadData : (function(){
+                    var setValues = function(scope, data, config) {
                         if (data.success) {
                             var d = (config.root) ? data[config.root] : data;
                             var self = $(config.self);
                             for (var i in d) {
                                 if (i != 'success') {
                                     var id = (config.mapping && config.mapping[i]) ? config.mapping[i] : i;
-                                    scope._setDomValue(self.find("#" + id), id, d[i]);
+                                    scope._setDomValue(self.find("#" + id + ",[name='" + id + "']"), id, d[i]);
                                 }
                             }
                         }
                     };
-                    var scope = this;
-                    if (config.local) {
-                        setValues(config.data);
-                    } else if (config.url) {
-                        $.ajax({
-                            type : "GET",
-                            crossDomain : true,
-                            url : config.url,
-                            data : config.data,
-                            dataType : "jsonp",
-                            success : function(msg) {
-                                setValues(msg);
-                                if (config.callback) {
-                                    config.callback.call(config.scope || scope, config.args, msg);
+                    return function(config) {
+                        var scope = this;
+                        if (config.local) {
+                            setValues(scope, config.data, config);
+                        } else if (config.url) {
+                            $.ajax({
+                                type : "GET",
+                                crossDomain : true,
+                                url : config.url,
+                                data : config.data,
+                                dataType : config.dataType || "json",
+                                success : function(msg) {
+                                    setValues(scope, msg, config);
+                                    if (config.callback) {
+                                        config.callback.call(config.scope || scope, config.args, msg);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
-                },
+                })(),
 
-                _setDomValue : function(_input, id, value) {
+                _setDomValue : function(field, id, value) {
                     try {
+                        var _input = field;
                         if (_input.is("select") || (id && ( _input = $("#" + id)).is("select"))) {
                             $.each(_input.children(), function(i, n) {
                                 var nd = $(n);
@@ -312,6 +360,7 @@
                                 }
                             });
                         } else {
+                            _input = field
                             value = (value) ? value : '';
                             _input.val(value);
                         }
@@ -385,7 +434,7 @@
                             } else if (vs.indexOf('event.') == 0) {
                                 // eval('('+vd.value+')')
                                 // $(_se.$).unbind(vs.split('.')[1])
-                                // .bind(vs.split('.')[1],function(){alert(this)});
+                                // .bind(vs.split('.')[1],function(){console.log(this)});
                                 var en = str.split('.')[1];
                                 var ena = (en.indexOf('on') == 0) ? en : 'on' + en;
                                 _se.setAttribute(ena, '(' + value + ')(this)');
@@ -426,6 +475,8 @@
                             }
                         });
                     }
+                },
+                _ajax: function(config){
                 },
                 _validateContent : function(vd) {
                     // 验证数据格式
@@ -514,7 +565,7 @@
                         top : margintop / 2 + "px"
                     });
 
-                    var c = w.find(".dialogclose"), v = w.find(".dialogview");
+                    var c = w.find(".dialogclose"), v = w.find(".dialogview"), l = v.find('.dialogviewlayout'), f = l.find("iframe");
                     c.css({
                         right : "0px",
                         top : "0px",
@@ -527,32 +578,80 @@
                         left : padding + "px",
                         top : padding + "px"
                     });
+                    //解决iframe高度问题 15的滚动条
+                    f.css({
+                        "width" : attrs.width - 16 + "px",
+                        "height" : attrs.height - 22  + "px"
+                    });
+                },
+                _getMaxLevel:function(){
+                    var level = 0;
+                    $(".dialogpanel").each(function(i,v,n){
+                        var l = $(v).attr("level") * 1;
+                        level = Math.max(level, l);
+                    });
+                    return level;
+                },
+                _getDialogElementByLevel: function(level){
+                    if(level==null){
+                        level = this._getMaxLevel();
+                    }
+                    return $("#window-" + level);
                 },
                 _toggleDialog : function(attrs) {
-                    var level = 1, scope = this;
+                    var level = attrs.level;
+                    if(level == null){
+                        level = this._getMaxLevel();
+                    }
+
+                    var scope = this;
                     if (!attrs.model) {
                         this._toggleShadow();
                     }
                     var w = $("#window-" + level);
                     if (w.hasClass("dialogpanel")) {
                         if (w.is(":hidden")) {
-                            this._resizeDialog(w, attrs);
                             // 更改dialog内容
-                            var v = w.find('.dialogview');
-                            v.empty();
-                            this._initDomInDialog(v, attrs);
+                            var l = w.find('.dialogviewlayout');
+                            l.empty();
+                            this._initDomInDialog(l, attrs);
+                            this._resizeDialog(w, attrs);
                             w.show();
                         } else {
                             w.hide();
+                            w.find("em[role='scroll-top']").hide();
                         }
                     } else {
-                        w = $("<div id='window-" + level + "' class='dialogpanel' style='z-index : " + (1000 + level * 10) + ";'></div>");
+                        w = $("<div id='window-" + level + "' level='" + level + "' class='dialogpanel' style='z-index : " + (1000 + level * 10) + ";'></div>");
                         var c = $("<div class='dialogclose' style='z-index : " + (1000 + level * 10 + 9) + ";'></div>");
                         var v = $("<div class='dialogview' style='z-index : " + (1000 + level * 10 + 1) + ";'></div>");
-                        this._initDomInDialog(v, attrs);
-                        w.append(c);
-                        w.append(v);
+                        var l = $("<div class='dialogviewlayout'></div>");
+                        var e = $("<em class='dialogscrolltop' role='scroll-top' style='z-index : " + (1000 + level * 10 + 9) + ";'><i class='glyphicon '></i></em>");//glyphicon-eject
+
                         w.appendTo("body");
+                        w.append(v);
+                        v.append(l);
+                        w.append(c);
+                        w.append(e);
+
+                        this._initDomInDialog(l, attrs);
+
+                        v.mCustomScrollbar({
+                            theme : "minimal-dark",
+                            callbacks : {
+                                whileScrolling : function() {
+                                    var scrollTop = this.mcs.draggerTop;
+                                    if (scrollTop <= 8) {
+                                        e.hide();
+                                    } else {
+                                        e.fadeTo( "slow" , 0.5);
+                                    }
+                                }
+                            }
+                        });
+                        e.click(function(){
+                            v.mCustomScrollbar("scrollTo", 0);
+                        });
 
                         this._resizeDialog(w, attrs);
 

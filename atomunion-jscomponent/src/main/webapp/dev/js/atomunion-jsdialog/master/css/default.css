@@ -30,6 +30,7 @@
 	position: absolute;
 	overflow: hidden;
 	font-size: 10px;
+    opacity: 0.95;
 }
 
 .dialogclose {
@@ -40,7 +41,7 @@
 
 .dialogview {
 	position: absolute;
-	overflow: hidden;
+	overflow: auto;
 	background: #ffffff;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
@@ -54,23 +55,48 @@
 	background-color: #fff;
 	border: 1px solid rgba(0,0,0,0.2);
 	outline: 0;
-	padding: 0px;
 	/*padding: 2px;*/
 	/*background: #181a1d;*/
 	/*box-shadow: 3px 3px 5px #000,-1px -1px 4px #000;*//*#87C4ED;*/
 	/*-webkit-box-shadow: 3px 3px 5px #000,-1px -1px 4px #000;*/
 	/*-moz-box-shadow: 3px 3px 5px #000,-1px -1px 4px #000;*/
 }
+.dialogviewlayout{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+}
+.dialogscrolltop{
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    color:#fff;
+    border-radius: 50%;
+    box-shadow: 0px 0px 6px 4px rgba(0,0,0,0.11);
+	width: 40px;
+	height: 40px;
+	font-weight: 100px;
+	font-size: 16px;
+	line-height: 40px;
+	text-align: center;
+	color: #757575;
+	background: #673ab7;
+    display: none;
+    background-image: url("../images/icon-up.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+}
 .layoutContainer {
 	width: 100%;
 	height: 100%;
 }
 .inputContainer {
-	padding: 4px;
+	/*padding: 4px;
 	border: 1px solid #cfcfcf;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-	border-radius: 4px;
+	border-radius: 4px;*/
 }
 .inputContainer.disabled {
 	background: rgb(235, 235, 228);
@@ -80,7 +106,12 @@
 	margin: 0 0 0 0;
 	padding: 10px;
 }
-
+label.error .inputContainer{
+    border-color: #e51c23;
+}
+label.error .errormsg{
+    color: #e51c23;
+}
 fieldset {
 	padding: 8px 8px 16px 8px;
 	border: 1px solid #cfcfcf;
@@ -119,12 +150,18 @@ fieldset label span {
 .inputContainer input, select, textarea {
 	display: block;
 	/*border: 1px solid #E3E3E3;*/
-	border: 0px none;
+    /*background-color:#f4f4f4;*/
+	/*border: 0px none;*/
 	color: #242424;
-	padding: 0px;
-	/*background-color:#f4f4f4;*/
+    border: 1px solid #cfcfcf;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 }
-
+select:disabled,select.disabled{
+    background: rgb(235, 235, 228);
+    border: 1px solid #cfcfcf;
+}
 .text-input {
 	width: 100%;
 	height: 24px;
@@ -139,7 +176,7 @@ fieldset label span {
 
 .text-select {
 	width: 100%;
-	height: 24px;
+	height: 26px;
 	overflow: hidden;
 }
 
@@ -154,10 +191,13 @@ fieldset label span {
 span.checkbox, .checkbox {
 	display: inline;
 }
-
+.dialogtoolbar{
+    text-align: right;
+    padding: 8px;
+    width: 100%;
+}
 .button-input {
-	margin-top: 5px;
-	float: right;
+	margin-right: 4px;
 	text-decoration: none;
 	cursor: pointer;
 	display: inline-block;
@@ -259,53 +299,4 @@ hr {
 	font-family: Arial, Helvetica, sans-serif,"微软雅黑";
 	color: #e6572d;
 	text-align: center;
-}
-
-#loading {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 10000000000;
-}
-
-#loading .loading-shadow {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	filter: alpha(opacity = 80);
-	opacity: .8;
-	background-color: #e3e3e3;
-}
-
-#loading .loading-discription {
-	position: absolute;
-	top: 50%;
-	width: 100%;
-	margin-top: -70px;
-}
-
-#loading .logo {
-	background: url('../images/loading.gif') no-repeat center;
-	display: block;
-	height: 120px
-}
-
-#loading .title {
-	font-family: "Bonbon", sans-serif;
-	font-size: 2em;
-	color: gray;
-	text-align: center;
-	white-space: nowrap;
-	display: block
-}
-
-#loading .desc {
-	font-size: 8px;
-	text-align: center;
-	white-space: nowrap;
-	display: block
 }

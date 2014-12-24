@@ -47,26 +47,26 @@
 					setUp : function(data) {
 						return data;
 					},
-					getTemplate : function(result, data, opts) {
+					getTemplate : function(result, data, opt) {
 					},
-					getTemplates : function(results, data, opts) {
+					getTemplates : function(results, datas, opts, origin) {
 					}
 				},
-				getTemplate : function(result, data, opts) {
-					(opts.getTemplate || $.fn.licoTemplate.getTemplate).call(
-							$.fn.licoTemplate, result, data);
+				getTemplate : function(result, data, opt) {
+					(opt.getTemplate || $.fn.licoTemplate.getTemplate).call(
+							$.fn.licoTemplate, result, data, opt);
 				},
 				
-				getTemplates : function(results, data, opts) {
+				getTemplates : function(results, datas, opts, origin) {
 					(opts.getTemplates || $.fn.licoTemplate.getTemplates).call(
-							$.fn.licoTemplate, results, data);
+							$.fn.licoTemplate, results, datas, opts, origin);
 				},
 				parse : function(opts) {
 					var scope = this;
 					$.licoStore($.extend({}, opts.store, {
 						getData : function(r) {
 							if (r.success) {
-								var data = r.data,templates=[];
+								var data = r.data,templates=[],datas=[];
 								if (opts.setUpBefore) {
 									data = opts.setUpBefore.call(opts, data);
 								}
@@ -77,6 +77,7 @@
 												opts);
 										scope.getTemplate(template, d2, opts);
 										templates.push(template);
+                                        datas.push(d2);
 									});
 								} else {
 									var d = scope
@@ -85,11 +86,12 @@
 											opts);
 									scope.getTemplate(template, d, opts);
 									templates.push(template);
+                                    datas.push(d);
 								}
 
-								scope.getTemplates(templates, d, opts);
+								scope.getTemplates(templates, datas, opts, r);
 							} else {
-								alert('success:' + r.data.success
+								console.log('success:' + r.data.success
 										+ '\nmessage:' + r.data.msg);
 							}
 						}
@@ -144,12 +146,12 @@
 			})(opts);;
 		};
 
-		$.fn.licoTemplate.getTemplate = function(template,data,opts) {
-			//alert(template);
+		$.fn.licoTemplate.getTemplate = function(template, data, opt) {
+			//console.log(template);
 		};
 		
-		$.fn.licoTemplate.getTemplates = function(templates,data,opts) {
-			//alert(templates);
+		$.fn.licoTemplate.getTemplates = function(templates, datas, opts, origin) {
+			//console.log(templates);
 		};
 
 		$.licoTemplate = $.fn.licoTemplate;
