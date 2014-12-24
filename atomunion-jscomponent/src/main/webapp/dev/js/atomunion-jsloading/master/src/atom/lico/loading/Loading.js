@@ -2,7 +2,7 @@
     if (!$.fn.licoLoading) {
         var licoLoading = function() {
             return {
-                version : '0.0.1',
+                version : '0.0.2',
                 defaults : {
                 	container : 'body'
                 },
