@@ -33,7 +33,7 @@
                 	var container = this.options.container;
                 	var width = 0, height = 0;
                 	
-                	if(container == 'body'){
+                	if(container[0] == $("body")[0]){
                 		width = Math.max($(window).width(), $("body").width());
                         height = Math.max($(window).height(), $("body").height());
                 	}else{
