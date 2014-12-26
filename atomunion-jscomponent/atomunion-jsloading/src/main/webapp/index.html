@@ -16,15 +16,71 @@
 <script type="text/javascript" src="dev/js/atomunion-jsloading/master/src/atom/lico/loading/Loading.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$(document.body).licoLoading({
-			title:'atomunion-jsloading test',
-			desc:"正在加载数据，请稍后..."
+		
+		var titles = ['relative logo-0','relative logo-1','relative logo-2','relative logo-3','relative logo-4',
+					 'absolute logo-0','absolute logo-1','absolute logo-2','absolute logo-3','absolute logo-4'];
+		
+		$("div[name='test-loading-0']").each(function(i,v,o){
+			var title = i == 0 ? titles[0] : titles[5];
+			$(this).licoLoading({
+				title:title,
+				desc:"正在加载数据，请稍后..."
+			});
+		});
+		
+		
+		$("div[name='test-loading-1']").each(function(i,v,o){
+			var title = i >= 4 ? titles[i+2] : titles[i+1];
+			$(this).licoLoading({
+				title:title,
+				desc:"正在加载数据，请稍后...",
+				logo:$(this).attr("class")
+			});
+		});
+		
+		$("div[name='test-loading-2']").each(function(){
+			
+			$(this).licoLoading({
+				
+			});
 		});
 	});
 </script>
 
 </head>
 <body>
-
+	<div name="test-loading-0" class="logo-0" style="height: 280px; width:360px; background: #ff0000; float:left; margin: 15px;"></div>
+	
+	<div name="test-loading-1" class="logo-1" style="height: 280px; width:360px; background: #ff0000; float:left; margin: 15px;"></div>
+	<div name="test-loading-1" class="logo-2" style="height: 280px; width:360px; background: #ff0000; float:left; margin: 15px;"></div>
+	<div name="test-loading-1" class="logo-3" style="height: 280px; width:360px; background: #ff0000; float:left; margin: 15px;"></div>
+	<div name="test-loading-1" class="logo-4" style="height: 280px; width:360px; background: #ff0000; float:left; margin: 15px;"></div>
+	
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; margin: 15px;" data-title="relative logo-5" data-logo="logo-5" data-desc="正在加载数据，请稍后..."></div>
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; margin: 15px;" data-title="relative logo-6" data-logo="logo-6" data-desc="正在加载数据，请稍后..."></div>
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; margin: 15px;" data-title="relative logo-7" data-logo="logo-7" data-desc="正在加载数据，请稍后..."></div>
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; margin: 15px;" data-title="relative logo-8" data-logo="logo-8" data-desc="正在加载数据，请稍后..."></div>
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; margin: 15px;" data-title="relative logo-9" data-logo="logo-9" data-desc="正在加载数据，请稍后..."></div>
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; margin: 15px;" data-title="relative logo-10" data-logo="logo-10" data-desc="正在加载数据，请稍后..."></div>
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; margin: 15px;" data-title="relative logo-11" data-logo="logo-11" data-desc="正在加载数据，请稍后..."></div>
+	
+	
+	
+	
+	
+	<div name="test-loading-0" class="logo-0" style="height: 280px; width:360px; background: #ff0000; float:left; position: absolute; top: 1000px; left:15px;"></div>
+	<div name="test-loading-1" class="logo-1" style="height: 280px; width:360px; background: #ff0000; float:left; position: absolute; top: 1000px; left:390px;"></div>
+	<div name="test-loading-1" class="logo-2" style="height: 280px; width:360px; background: #ff0000; float:left; position: absolute; top: 1000px; left:765px;"></div>
+	<div name="test-loading-1" class="logo-3" style="height: 280px; width:360px; background: #ff0000; float:left; position: absolute; top: 1295px; left:15px;"></div>
+	<div name="test-loading-1" class="logo-4" style="height: 280px; width:360px; background: #ff0000; float:left; position: absolute; top: 1295px; left:390px;"></div>
+	
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; position: absolute; top: 1295px; left:765px;" data-title="absolute logo-5" data-logo="logo-5" data-desc="正在加载数据，请稍后..."></div>
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; position: absolute; top: 1590px; left:15px;" data-title="absolute logo-6" data-logo="logo-6" data-desc="正在加载数据，请稍后..."></div>
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; position: absolute; top: 1590px; left:390px;" data-title="absolute logo-7" data-logo="logo-7" data-desc="正在加载数据，请稍后..."></div>
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; position: absolute; top: 1590px; left:765px;" data-title="absolute logo-8" data-logo="logo-8" data-desc="正在加载数据，请稍后..."></div>
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; position: absolute; top: 1890px; left:15px;" data-title="absolute logo-9" data-logo="logo-9" data-desc="正在加载数据，请稍后..."></div>
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; position: absolute; top: 1890px; left:390px;" data-title="absolute logo-10" data-logo="logo-10" data-desc="正在加载数据，请稍后..."></div>
+	<div name="test-loading-2" style="height: 280px; width:360px; background: #ff0000; float:left; position: absolute; top: 1890px; left:765px;" data-title="absolute logo-11" data-logo="logo-11" data-desc="正在加载数据，请稍后..."></div>
+	
 </body>
 </html>

@@ -54,6 +54,9 @@
                      v.empty();
                      v = w.find('.desc');
                      v.empty();
+                     l = w.find('.logo');
+                     l.attr('class', 'logo');
+                     l.empty();
                 },
                 _initLoading: function(w){
                 	var attrs = this.options;
@@ -61,6 +64,19 @@
                      v.html(attrs.title);
                      v = w.find('.desc');
                      v.html(attrs.desc);
+                     l = w.find('.logo');
+                     l.addClass(attrs.logo || 'logo-0');
+                     if(attrs.logo == 'logo-1'){
+                         for(var i=1;i<7;i++){
+                             l.append('<div class="vague vague'+i+'"/>');
+                         }
+                     }else if(attrs.logo == 'logo-7'){
+                         l.append('<div class="boule"/>');
+                     }else if(attrs.logo == 'logo-9'){
+                         l.append('<div class="round"/>');
+                     }else if(attrs.logo == 'logo-10'){
+                         l.append('<div class="process"/>');
+                     }
                 },
                 _toggleLoading : function(flag) {
                     var container = this.options.container;
@@ -109,7 +125,7 @@
         	if(this == $){
         		opts = $.extend({}, licoLoading.defaults, opts || {});
         	}else{
-        		opts = $.extend({}, licoLoading.defaults, {container:this,title:this.attr("data-title"),desc:this.attr("data-desc")},opts || {});
+        		opts = $.extend({}, licoLoading.defaults, {container:this,title:this.attr("data-title"),desc:this.attr("data-desc"),logo:this.attr("data-logo")},opts || {});
         	}
         	
             licoLoading.options = opts;
