@@ -79,9 +79,9 @@
                      }
                 },
                 _toggleLoading : function(flag) {
-                    var container = this.options.container;
+                    var container = $(this.options.container);
                     
-                    var w = $(container).children(".loading");
+                    var w = container.children(".loading");
                     if (w.length > 0) {
                     	var hidden = w.is(":hidden");
                     	
@@ -96,7 +96,17 @@
                             w.hide();
                     	}
                     } else {
-                        w = $("<div class='loading' style='display:none'></div>");
+                        var position = container.css("position");
+                        switch(position){
+                            case '':
+                            case 'static':
+                                position = "relative";
+                                break;
+                            default:
+                                break;
+                        }
+                        
+                        w = $("<div class='loading' style='display:none; position:" + position + "'></div>");
                         var c = $("<div class='shadow' style='display:none'></div>");
                         var v = $('<div class="content">' +
 									'<div class="logo"></div>' +
