@@ -48,11 +48,16 @@
                 },
                 _resizeLoading : function(w) {
                 	//解决padding，margin问题
+                	var size = this._getContainerSize();;
+                    w.css({
+                        "width" : size.width + "px",
+                        "height" : size.height + "px"
+                    });
                 },
                 _clearLoading: function(w){
                 	 var v = w.find('.title');
                      v.empty();
-                     v = w.find('.desc');
+                     v = w.find('.desc').find(".text");
                      v.empty();
                      l = w.find('.logo');
                      l.attr('class', 'logo');
@@ -62,8 +67,8 @@
                 	var attrs = this.options;
                 	 var v = w.find('.title');
                      v.html(attrs.title);
-                     v = w.find('.desc');
-                     v.html(attrs.desc);
+                     v = w.find('.desc').find(".text");
+                     v.html(attrs.desc || 'Loading');
                      l = w.find('.logo');
                      l.addClass(attrs.logo || 'logo-0');
                      if(attrs.logo == 'logo-1'){
@@ -109,9 +114,9 @@
                         w = $("<div class='loading' style='display:none; position:" + position + "'></div>");
                         var c = $("<div class='shadow' style='display:none'></div>");
                         var v = $('<div class="content">' +
-									'<div class="logo"></div>' +
-									'<div class="title"></div>' +
-									'<div class="desc"></div>' +
+									'<div class="logo"/>' +
+									'<div class="title"/>' +
+									'<div class="desc"><span class="text"/><span class="point"/></div>' +
 								'</div>');
                         
                         w.append(c);
