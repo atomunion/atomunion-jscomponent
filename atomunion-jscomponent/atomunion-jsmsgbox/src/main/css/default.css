@@ -1,5 +1,5 @@
 .msgbox {
-	font-family: '微软雅黑','华文宋体','宋体', Arial, Helvetica, sans-serif;
+	font-family: '微软雅黑', Georgia, serif;
 	font-size: 12px;
 }
 .msgbox.msgbox-overlay {
@@ -9,7 +9,7 @@
 	top: 0;
 	left: 0;
 	position: fixed;
-	z-index: 2000;
+	z-index: 9998;
 	display: none;
 }
 .msgbox.msgbox-overlay-default,.msgbox.msgbox-overlay-success {
@@ -22,7 +22,7 @@
 
 .msgbox.msgbox-box {
 	display: none;
-	z-index: 2001;
+	z-index: 9999;
 	position: absolute;
 	padding: 18px 18px;
 	text-align: center;

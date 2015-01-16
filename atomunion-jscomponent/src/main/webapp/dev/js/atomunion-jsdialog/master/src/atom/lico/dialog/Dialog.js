@@ -1,11 +1,12 @@
 //依赖mCustomScrollbar
 (function($) {
     if (!$.fn.licoDialog) {
+        var zIndex = 9990;
         var licoDialog = function() {
             return {
-                version : '0.0.2',
+                version : '0.0.3',
                 defaults : {
-
+                    container : 'body'
                 },
 
                 _createContentInDialog : function(parentNode, legendName) {
@@ -38,7 +39,7 @@
                                     label = container.parent("label"),
                                     tip = label.find(".tip"),
                                     errorE = label.find(".errormsg");
-                                label.addClass("error")
+                                label.addClass("error");
                                 tip.hide();
                                 errorE.html(errors[i]);
                             }
@@ -343,7 +344,7 @@
                                 }
                             });
                         }
-                    }
+                    };
                 })(),
 
                 _setDomValue : function(field, id, value) {
@@ -360,7 +361,7 @@
                                 }
                             });
                         } else {
-                            _input = field
+                            _input = field;
                             value = (value) ? value : '';
                             _input.val(value);
                         }
@@ -506,9 +507,28 @@
                         return;
                     }
                 },
-                _resizeShadow : function(s) {
-                    var width = Math.max($(window).width(), $("body").width());
-                    var height = Math.max($(window).height(), $("body").height());
+                _getContainerSize : function(attrs){
+                    var container = attrs.container;
+                    var width = 0, height = 0;
+                    
+                    if(container[0] == $("body")[0]){
+                        width = Math.max($(window).width(), $("body").width());
+                        height = Math.max($(window).height(), $("body").height());
+                    }else{
+                        width = $(container).width();
+                        height = $(container).height();
+                    }
+                    
+                    return {
+                        width : width,
+                        height : height
+                    };
+                },
+                _resizeShadow : function(attrs,s) {
+                    
+                    var size = this._getContainerSize(attrs);
+                    var width = size.width;
+                    var height = size.height;
 
                     var w = s.width(), h = s.height();
                     if (w < width) {
@@ -522,11 +542,11 @@
                         });
                     }
                 },
-                _toggleShadow : function() {
+                _toggleShadow : function(attrs) {
                     var w = $("#dialog-shadow");
                     if (w.hasClass("dialogshadow")) {
                         if (w.is(":hidden")) {
-                            this._resizeShadow(w);
+                            this._resizeShadow(attrs,w);
                             w.show();
                             $("body").children().not(".dialogshadow,.dialogpanel,script,style,link").addClass("blur");
                         } else {
@@ -534,10 +554,10 @@
                             $("body").children().not(".dialogshadow,.dialogpanel,script,style,link").removeClass("blur");
                         }
                     } else {
-                        w = $("<div id='dialog-shadow' class='dialogshadow' style='z-index : 1000;'></div>");
+                        w = $("<div id='dialog-shadow' class='dialogshadow' style='z-index: " + zIndex + ";'></div>");
                         w.appendTo("body");
 
-                        this._resizeShadow(w);
+                        this._resizeShadow(attrs,w);
                         w.fadeTo(0, 0.49);
                         $("body").children().not(".dialogshadow,.dialogpanel,script,style,link").addClass("blur");
                     }
@@ -606,27 +626,39 @@
 
                     var scope = this;
                     if (!attrs.model) {
-                        this._toggleShadow();
+                        this._toggleShadow(attrs);
                     }
                     var w = $("#window-" + level);
                     if (w.hasClass("dialogpanel")) {
+                        var l = w.find('.dialogviewlayout');
                         if (w.is(":hidden")) {
                             // 更改dialog内容
-                            var l = w.find('.dialogviewlayout');
                             l.empty();
                             this._initDomInDialog(l, attrs);
+                            
+                            //render listener
+                            attrs.render && attrs.render.call(scope,w,l, attrs);
+                            
                             this._resizeDialog(w, attrs);
-                            w.show();
+                            
+                            //show listener after layout
+                            w.show(400,'swing',function(){
+                                attrs.show && attrs.show.call(scope,w,l, attrs);
+                            });
                         } else {
-                            w.hide();
                             w.find("em[role='scroll-top']").hide();
+                            
+                            //close listener
+                            w.hide(400,'swing',function(){
+                                attrs.close && attrs.close.call(scope,w,l, attrs);
+                            });
                         }
                     } else {
-                        w = $("<div id='window-" + level + "' level='" + level + "' class='dialogpanel' style='z-index : " + (1000 + level * 10) + ";'></div>");
-                        var c = $("<div class='dialogclose' style='z-index : " + (1000 + level * 10 + 9) + ";'></div>");
-                        var v = $("<div class='dialogview' style='z-index : " + (1000 + level * 10 + 1) + ";'></div>");
+                        w = $("<div id='window-" + level + "' level='" + level + "' class='dialogpanel' style='z-index : " + (zIndex + level * 10) + ";'></div>");
+                        var c = $("<div class='dialogclose' style='z-index : " + (zIndex + level * 10 + 9) + ";'></div>");
+                        var v = $("<div class='dialogview' style='z-index : " + (zIndex + level * 10 + 1) + ";'></div>");
                         var l = $("<div class='dialogviewlayout'></div>");
-                        var e = $("<em class='dialogscrolltop' role='scroll-top' style='z-index : " + (1000 + level * 10 + 9) + ";'><i class='glyphicon '></i></em>");//glyphicon-eject
+                        var e = $("<em class='dialogscrolltop' role='scroll-top' style='z-index : " + (zIndex + level * 10 + 9) + ";'><i class='glyphicon '></i></em>");//glyphicon-eject
 
                         w.appendTo("body");
                         w.append(v);
@@ -636,6 +668,9 @@
 
                         this._initDomInDialog(l, attrs);
 
+                        //render listener
+                        attrs.render && attrs.render.call(scope,w,l, attrs);
+                        
                         v.mCustomScrollbar({
                             theme : "minimal-dark",
                             callbacks : {
@@ -658,13 +693,25 @@
                         c.click(function() {
                             scope._toggleDialog(attrs);
                         });
+                        
+                        //show listener after layout
+                        attrs.show && attrs.show.call(scope,w,l, attrs);
+                        
                     }
                     return w;
                 }
             };
         }();
         $.fn.licoDialog = function(opts) {
-            var opts = $.extend({}, licoDialog.defaults, opts || {});
+            if(this == $){
+                opts = $.extend({}, licoDialog.defaults, opts || {});
+                if(typeof opts.container === 'string'){
+                    opts.container = $(opts.container);
+                }
+            }else{
+               opts = $.extend({}, licoLoading.defaults, {container:this} , opts || {}); 
+            }
+            
             return (function() {
                 licoDialog._toggleDialog.apply(licoDialog, arguments);
             })(opts);

@@ -139,6 +139,9 @@
         	
         	if(this == $){
         		opts = $.extend({}, licoLoading.defaults, opts || {});
+        		if(typeof opts.container === 'string'){
+        		    opts.container = $(opts.container);
+        		}
         	}else{
         		opts = $.extend({}, licoLoading.defaults, {container:this,title:this.attr("data-title"),desc:this.attr("data-desc"),logo:this.attr("data-logo")},opts || {});
         	}
