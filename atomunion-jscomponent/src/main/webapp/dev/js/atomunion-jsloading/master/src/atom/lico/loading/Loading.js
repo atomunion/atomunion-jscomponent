@@ -21,10 +21,10 @@
                 	if(hidden && (flag === true || flag == null)){
                 		 this._resizeShadow(w);
                          w.show();
-                         $(container).children().not(".loading,script,style,link").addClass("loading-blur");
+                         $(container).children().not(".au-loading,script,style,link").addClass("au-loading-blur");
                 	}else if(!hidden && (flag === false || flag == null)){
                 		 w.hide();
-                         $(container).children().not(".loading,script,style,link").removeClass("loading-blur");
+                         $(container).children().not(".au-loading,script,style,link").removeClass("au-loading-blur");
                 	}
                     
                     return w;
@@ -86,7 +86,7 @@
                 _toggleLoading : function(flag) {
                     var container = $(this.options.container);
                     
-                    var w = container.children(".loading");
+                    var w = container.children(".au-loading");
                     if (w.length > 0) {
                     	var hidden = w.is(":hidden");
                     	
@@ -111,7 +111,7 @@
                                 break;
                         }
                         
-                        w = $("<div class='loading' style='display:none; position:" + position + "'></div>");
+                        w = $("<div class='au-loading' style='display:none; position:" + position + "'></div>");
                         var c = $("<div class='shadow' style='display:none'></div>");
                         var v = $('<div class="content">' +
 									'<div class="logo"/>' +

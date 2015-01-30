@@ -23,13 +23,13 @@
                     $('<div/>').css({
                         "width" : width + "px",
                         "height" : height + "px"
-                    }).addClass('msgbox msgbox-overlay msgbox-overlay-' + options.icon + ' msgbox-' + options.timestamp).hide().appendTo('body');
+                    }).addClass('au-msgbox au-msgbox-overlay au-msgbox-overlay-' + options.icon + ' au-msgbox-' + options.timestamp).hide().appendTo('body');
                 },
                 showOverlay : function(options) {
-                    $('.msgbox.msgbox-overlay.msgbox-' + options.timestamp).fadeIn();
+                    $('.au-msgbox.au-msgbox-overlay.au-msgbox-' + options.timestamp).fadeIn();
                 },
                 deleteOverlay : function(options) {
-                    $('.msgbox.msgbox-overlay.msgbox-' + options.timestamp).fadeOut(function() {
+                    $('.au-msgbox.au-msgbox-overlay.au-msgbox-' + options.timestamp).fadeOut(function() {
                         $(this).remove();
                     });
                 },
@@ -43,13 +43,13 @@
                     var cancelBtn = options.CANCEL;
                     var btns = options.buttons;
 
-                    var $box = $('<div/>').addClass('msgbox msgbox-box msgbox-box-' + icon + ' msgbox-' + options.timestamp).hide().appendTo('body');
+                    var $box = $('<div/>').addClass('au-msgbox au-msgbox-box au-msgbox-box-' + icon + ' au-msgbox-' + options.timestamp).hide().appendTo('body');
 
-                    $('<h3 class="msgbox-box-title"/>').html(title).appendTo($box);
+                    $('<h3 class="au-msgbox-box-title"/>').html(title).appendTo($box);
                     
-                    $('<p class="msgbox-box-validate msgbox-box-validate-' + icon + '"/>').appendTo($box);
+                    $('<p class="au-msgbox-box-validate au-msgbox-box-validate-' + icon + '"/>').appendTo($box);
 
-                    $('<p class="msgbox-box-content msgbox-box-content-' + icon + '"/>').html(content).appendTo($box);
+                    $('<p class="au-msgbox-box-content au-msgbox-box-content-' + icon + '"/>').html(content).appendTo($box);
 
                     if(options.html){
                     	$box.append('<p>'+options.html+'</p>');
@@ -77,7 +77,7 @@
                         $('<button class="button-yes" value=1/>').html(yesBtn).appendTo($box);
                     }
 
-                    $('.msgbox.msgbox-box.msgbox-' + options.timestamp + ' button').on('keydown', function(e) {
+                    $('.au-msgbox.au-msgbox-box.au-msgbox-' + options.timestamp + ' button').on('keydown', function(e) {
                         if (e.which === 9) {//Tab key
                             e.preventDefault();
                             var next = $(this).next('.' + icon + '-button');
@@ -90,28 +90,28 @@
                     });
                 },
                 showBox : function(options) {
-                    $('.msgbox.msgbox-box.msgbox-' + options.timestamp).fadeIn(function() {
+                    $('.au-msgbox.au-msgbox-box.au-msgbox-' + options.timestamp).fadeIn(function() {
                         $(this).children('button').eq(1).focus();
                     });
                 },
 
                 deleteBox : function(options) {
-                    $('.msgbox.msgbox-box.msgbox-' + options.timestamp).fadeOut(function() {
+                    $('.au-msgbox.au-msgbox-box.au-msgbox-' + options.timestamp).fadeOut(function() {
                         $(this).remove();
                     });
                 },
 
                 attachHandlers : function(options) {
                     var icon = options.icon, scope = this;
-                    $('.msgbox.msgbox-' + options.timestamp + ' button').on('click', function() {
+                    $('.au-msgbox.au-msgbox-' + options.timestamp + ' button').on('click', function() {
                     	
-                    	var value =  $(this).val(), msgbox = $('.msgbox.msgbox-' + options.timestamp);
+                    	var value =  $(this).val(), msgbox = $('.au-msgbox.au-msgbox-' + options.timestamp);
                     	
                     	if (options.validate){
                     		var result = options.validate.call(options, value, msgbox);
                     		
                     		if(!result.success){
-                    			msgbox.find('.msgbox-box-validate').html(result.msg);
+                    			msgbox.find('.au-msgbox-box-validate').html(result.msg);
                     			return;
                     		}
                     	}

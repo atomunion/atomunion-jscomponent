@@ -1,4 +1,4 @@
-.loading {
+.au-loading {
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -8,7 +8,7 @@
 	font-family: "微软雅黑", "Comic Sans MS", cursive;
 }
 
-.loading .shadow {
+.au-loading .shadow {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -19,7 +19,7 @@
 	background-color: #000;
 }
 
-.loading-blur {
+.au-loading-blur {
 	-webkit-filter: blur(3px);
 	-moz-filter: blur(3px);
 	-o-filter: blur(3px);
@@ -32,7 +32,7 @@
 	user-select: none
 }
 
-.loading .content {
+.au-loading .content {
 	position: absolute;
 	top: 50%;
 	width: 100%;
@@ -40,12 +40,12 @@
 	color: #fff;
 }
 
-.loading .logo {
+.au-loading .logo {
 	display: block;
 	height: 120px
 }
 
-.loading .title {
+.au-loading .title {
 	font-size: 1em;
 	text-align: center;
 	white-space: nowrap;
@@ -54,7 +54,7 @@
 	display: block
 }
 
-.loading .desc {
+.au-loading .desc {
 	font-size: 0.6em;
 	text-align: center;
 	white-space: nowrap;
@@ -62,7 +62,7 @@
 	display: block
 }
 
-.loading .point {
+.au-loading .point {
   height : 3px;
   width : 3px;
   position : relative;
@@ -101,12 +101,12 @@
 }
 
 /*======================================*/
-.loading .logo-0 {
+.au-loading .logo-0 {
 	background: url(../images/loading.gif) no-repeat center;
 }
 
 /*======================================*/
-.loading .logo-1 {
+.au-loading .logo-1 {
 	margin: auto 50%;
 	position: relative;
 }
@@ -219,14 +219,14 @@
 }
 
 /*======================================*/
-.loading .logo-2, .loading .logo-2:before, .loading .logo-2:after {
+.au-loading .logo-2, .au-loading .logo-2:before, .au-loading .logo-2:after {
 	border-radius: 50%;
 }
-.loading .logo-2:before, .loading .logo-2:after {
+.au-loading .logo-2:before, .au-loading .logo-2:after {
 	position: absolute;
 	content: '';
 }
-.loading .logo-2:before {
+.au-loading .logo-2:before {
 	width: 5.2em;
 	height: 10.2em;
 	background: #0dcecb;
@@ -238,7 +238,7 @@
 	-webkit-animation: logo-2 2s infinite ease 1.5s;
 	animation: logo-2 2s infinite ease 1.5s;
 }
-.loading .logo-2 {
+.au-loading .logo-2 {
 	font-size: 11px;
 	text-indent: -99999em;
 	margin: auto;
@@ -247,7 +247,7 @@
 	height: 10em;
 	box-shadow: inset 0 0 0 1em #FFF;
 }
-.loading .logo-2:after {
+.au-loading .logo-2:after {
 	width: 5.2em;
 	height: 10.2em;
 	background: #0dcecb;
@@ -281,7 +281,7 @@
 }
 
 /*======================================*/
-.loading .logo-3 {
+.au-loading .logo-3 {
 	font-size: 10px;
 	margin: auto;
 	text-indent: -9999em;
@@ -298,7 +298,7 @@
 	-webkit-animation: logo-3 1.4s infinite linear;
 	animation: logo-3 1.4s infinite linear;
 }
-.loading .logo-3:before {
+.au-loading .logo-3:before {
 	width: 50%;
 	height: 50%;
 	background: #FFF;
@@ -308,7 +308,7 @@
 	left: 0;
 	content: '';
 }
-.loading .logo-3:after {
+.au-loading .logo-3:after {
 	background: #0dcecb;
 	width: 75%;
 	height: 75%;
@@ -343,7 +343,7 @@
 }
 
 /*======================================*/
-.loading .logo-4 {
+.au-loading .logo-4 {
 	font-size: 12px;
 	margin: 64px auto;
 	width: 1em;
@@ -408,7 +408,7 @@
 }
 
 /*======================================*/
-.loading .logo-5 {
+.au-loading .logo-5 {
 	margin: 60px auto;
 	font-size: 20px;
 	width: 1em;
@@ -473,7 +473,7 @@
 }
 
 /*======================================*/
-.loading .logo-6 {
+.au-loading .logo-6 {
 	font-size: 88px;
 	text-indent: -9999em;
 	overflow: hidden;
@@ -529,11 +529,11 @@
 }
 
 /*======================================*/
-.loading .logo-7 {
+.au-loading .logo-7 {
 	margin-top: 100px;
 	height: 20px;
 }
-.loading .logo-7 .boule{
+.au-loading .logo-7 .boule{
     height : 10px;
     width : 10px;
     background-color : #fff;
@@ -553,7 +553,7 @@
 }
 
 /*======================================*/
-.loading .logo-8 {
+.au-loading .logo-8 {
 	margin: auto;
 	font-size: 10px;
 	position: relative;
@@ -565,7 +565,7 @@
 	-webkit-animation: logo-8 1.1s infinite linear;
 	animation: logo-8 1.1s infinite linear;
 }
-.loading .logo-8, .loading .logo-8:after {
+.au-loading .logo-8, .au-loading .logo-8:after {
 	border-radius: 50%;
 	width: 7.8em;
 	height: 7.8em;
@@ -592,7 +592,7 @@
 }
 
 /*======================================*/
-.loading .logo-9{
+.au-loading .logo-9{
 	margin: auto;
     height: 118px;
 	width: 118px;
@@ -609,7 +609,7 @@
     0% {-webkit-transform: rotate(0deg);}
     100% {-webkit-transform: rotate(360deg);}
 }
-.loading .logo-9 .round {
+.au-loading .logo-9 .round {
     height: 10px;
     width: 10px;
     position: absolute;
@@ -620,7 +620,7 @@
 }
 
 /*======================================*/
-.loading .logo-10 {
+.au-loading .logo-10 {
 	margin: auto;
 	margin-top: 118px;
 	height : 2px;
@@ -628,7 +628,7 @@
 	box-shadow : 0px 0px 10px #000 inset;
 	border-radius: 1px;
 }
-.loading .logo-10 .process {
+.au-loading .logo-10 .process {
 	height : 2px;
 	width : 80%;
 	background-color : #fff;
@@ -648,7 +648,7 @@
 }
 
 /*======================================*/
-.loading .logo-11 {
+.au-loading .logo-11 {
   height: 96px;
   width: 96px;
   margin: 20px auto;

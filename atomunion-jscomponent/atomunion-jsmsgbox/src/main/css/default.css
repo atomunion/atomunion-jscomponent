@@ -1,8 +1,8 @@
-.msgbox {
+.au-msgbox {
 	font-family: '微软雅黑', Georgia, serif;
 	font-size: 12px;
 }
-.msgbox.msgbox-overlay {
+.au-msgbox.au-msgbox-overlay {
 	width: 100%;
 	height: 100%;
 	margin: 0;
@@ -12,15 +12,15 @@
 	z-index: 9998;
 	display: none;
 }
-.msgbox.msgbox-overlay-default,.msgbox.msgbox-overlay-success {
+.au-msgbox.au-msgbox-overlay-default,.au-msgbox.au-msgbox-overlay-success {
 	background-color: rgba(102, 153, 102, 0.60);
 }
 
-.msgbox.msgbox-overlay-error {
+.au-msgbox.au-msgbox-overlay-error {
 	background-color: rgba(153, 0, 0, 0.60);
 }
 
-.msgbox.msgbox-box {
+.au-msgbox.au-msgbox-box {
 	display: none;
 	z-index: 9999;
 	position: absolute;
@@ -32,7 +32,7 @@
 	left: 50%;
 	top: 185px;
 }
-.msgbox.msgbox-box .msgbox-box-title {
+.au-msgbox.au-msgbox-box .au-msgbox-box-title {
 	padding: 2px 5px;
 	margin: 0px 0px;
 	text-align: left;
@@ -41,7 +41,7 @@
 	color: #fff;
 }
 
-.msgbox.msgbox-box .msgbox-box-validate{
+.au-msgbox.au-msgbox-box .au-msgbox-box-validate{
 	padding: 2px 5px;
 	margin: 0px 0px;
 	font-weight: 800;
@@ -49,7 +49,7 @@
 	color: #e51c23;
 }
 
-.msgbox.msgbox-box .msgbox-box-content {
+.au-msgbox.au-msgbox-box .au-msgbox-box-content {
 	padding: 30px 20%;
 	margin: 0px 0px;
 	text-align: left;
@@ -57,20 +57,20 @@
 	position: relative;
 	word-break: break-all;
 }
-.msgbox.msgbox-box.msgbox-box-default,.msgbox.msgbox-box.msgbox-box-success {
+.au-msgbox.au-msgbox-box.au-msgbox-box-default,.au-msgbox.au-msgbox-box.au-msgbox-box-success {
 	color: #3276b1;
 	background-color: #5bc0de;
 	border: 1px solid #46b8da;
 	/*box-shadow: 0px 1px 10px #222;*/
 }
 
-.msgbox.msgbox-box.msgbox-box-error {
+.au-msgbox.au-msgbox-box.au-msgbox-box-error {
 	color: #d9534f;
 	background-color: #5bc0de;
 	border: 1px solid #46b8da;
 }
 
-.msgbox.msgbox-box button {
+.au-msgbox.au-msgbox-box button {
 	border-width: 1px;
 	border-style: solid;
 	color: #fff;
@@ -94,60 +94,60 @@
 	user-select: none;
 }
 
-.msgbox.msgbox-box button:hover {
+.au-msgbox.au-msgbox-box button:hover {
 	cursor: pointer;
 }
 
-.msgbox.msgbox-box .button-cancel {
+.au-msgbox.au-msgbox-box .button-cancel {
 	background-color: #f0ad4e;
 	border-color: #eea236;
 }
-.msgbox.msgbox-box .button-cancel:hover {
+.au-msgbox.au-msgbox-box .button-cancel:hover {
 	background-color: #ed9c28;
 	border-color: #d58512;
 }
-.msgbox.msgbox-box .button-no {
+.au-msgbox.au-msgbox-box .button-no {
 	background-color: #d9534f;
 	border-color: #d43f3a;
 }
-.msgbox.msgbox-box .button-no:hover {
+.au-msgbox.au-msgbox-box .button-no:hover {
 	background-color: #d2322d;
 	border-color: #ac2925;
 }
 
-.msgbox.msgbox-box .button-ok, .msgbox.msgbox-box .button-yes {
+.au-msgbox.au-msgbox-box .button-ok, .au-msgbox.au-msgbox-box .button-yes {
 	background-color: #5cb85c;
 	border-color: #4cae4c;
 }
 
-.msgbox.msgbox-box .button-ok:hover, .msgbox.msgbox-box .button-yes:hover {
+.au-msgbox.au-msgbox-box .button-ok:hover, .au-msgbox.au-msgbox-box .button-yes:hover {
 	background-color: #47a447;
 	border-color: #398439;
 }
 
-.msgbox.msgbox-box .button-info {
+.au-msgbox.au-msgbox-box .button-info {
 	background-color: #7979d2;
 	border-color: #6666cc;
 }
-.msgbox.msgbox-box .button-info:hover {
+.au-msgbox.au-msgbox-box .button-info:hover {
 	background-color: #5353c6;
 	border-color: #4040bf;
 }
 
-.msgbox.msgbox-box .button-dangous {
+.au-msgbox.au-msgbox-box .button-dangous {
 	background-color: #ff5722;
 	border-color: #f4511e;
 }
-.msgbox.msgbox-box .button-dangous:hover {
+.au-msgbox.au-msgbox-box .button-dangous:hover {
 	background-color: #e64a19;
 	border-color: #d84315;
 }
 
-.msgbox.msgbox-box .button-warning {
+.au-msgbox.au-msgbox-box .button-warning {
 	background-color: #ffc107;
 	border-color: #ffb300;
 }
-.msgbox.msgbox-box .button-warning:hover {
+.au-msgbox.au-msgbox-box .button-warning:hover {
 	background-color: #ffa000;
 	border-color: #ff8f00;
 }

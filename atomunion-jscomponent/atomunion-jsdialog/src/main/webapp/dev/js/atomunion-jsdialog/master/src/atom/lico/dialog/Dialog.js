@@ -1,12 +1,14 @@
 //依赖mCustomScrollbar
 (function($) {
     if (!$.fn.licoDialog) {
-        var zIndex = 9990;
+        var zIndex = 10001;
         var licoDialog = function() {
             return {
                 version : '0.0.3',
                 defaults : {
-                    container : 'body'
+                    container : 'body',
+                    destory : true,
+                    blur: true
                 },
 
                 _createContentInDialog : function(parentNode, legendName) {
@@ -35,7 +37,7 @@
                         for(var i in errors){
                             if(errors.hasOwnProperty(i)){
                                 var input = ele.find("input[name='"+i+"'],select[name='"+i+"'], textarea[name='"+i+"']"),
-                                    container = input.parent(".inputContainer"),
+                                    container = input.parent(".au-dialog-input-container"),
                                     label = container.parent("label"),
                                     tip = label.find(".tip"),
                                     errorE = label.find(".errormsg");
@@ -58,7 +60,7 @@
                             vr.tag = {
                                 name : "div",
                                 attrs : {
-                                    css : 'layoutContainer'
+                                    css : 'au-dialog-layout-container'
                                 }
                             };
                         }
@@ -72,11 +74,11 @@
                         if (normalFormField) {
                             var tip = (vr.tip) ? vr.tip : "";
                             var label = (vr.label) ? vr.label : "";
-                            var result = '<label><div>' + label + ':<span class="tip">' + tip + '</span><span class="errormsg"></span></div><div class="inputContainer"/></label>';
+                            var result = '<label><div>' + label + ':<span class="tip">' + tip + '</span><span class="errormsg"></span></div><div class="au-dialog-input-container"/></label>';
                             _container = $(result);
                             filedset.append(_container);
                             if (!vr.tag.attrs.css) {
-                                vr.tag.attrs.css = normalInput ? 'text-input' : (areaFlag ? 'text-area' : (selectFlag ? 'text-select': ''));
+                                vr.tag.attrs.css = normalInput ? 'au-dialog-au-dialog-text-input' : (areaFlag ? 'au-dialog-text-area' : (selectFlag ? 'au-dialog-text-select': ''));
                             }
                         } else {
                             if (submitFlag)
@@ -121,7 +123,7 @@
                             _container.append(_input);
                             return;
                         } else if (normalFormField) {
-                            _container = _container.find(".inputContainer");
+                            _container = _container.find(".au-dialog-input-container");
                         }
                         _container.append(_input);
 
@@ -213,19 +215,19 @@
                                 var b = buttons[i], button = null, method = null;
                                 switch(b) {
                                     case 'update':
-                                        button = '<input type="button" value="UPDATE" class="button-input btn-update"/>';
+                                        button = '<input type="button" value="UPDATE" class="au-dialog-button au-dialog-button-update"/>';
                                         method = "POST";
                                         break;
                                     case 'read':
-                                        button = '<input type="button" value="READ" class="button-input btn-read"/>';
+                                        button = '<input type="button" value="READ" class="au-dialog-button au-dialog-button-read"/>';
                                         method = "GET";
                                         break;
                                     case 'destory':
-                                        button = '<input type="button" value="DESTORY" class="button-input btn-destory"/>';
+                                        button = '<input type="button" value="DESTORY" class="au-dialog-button au-dialog-button-destory"/>';
                                         method = "DELETE";
                                         break;
                                     case 'create':
-                                        button = '<input type="button" value="CREATE" class="button-input btn-create"/>';
+                                        button = '<input type="button" value="CREATE" class="au-dialog-button au-dialog-button-create"/>';
                                         method = "PUT";
                                     default:
                                         break;
@@ -234,7 +236,7 @@
 
                                     var _button = $(button);
 
-                                    var toolbar = $("<div class='dialogtoolbar'/>");
+                                    var toolbar = $("<div class='au-dialog-toolbar'/>");
                                     toolbar.appendTo(_input);
                                     toolbar.append(_button);
                                     if (proxy) {
@@ -498,6 +500,12 @@
                         v.append($(attrs.html));
                         return;
                     }
+                    
+                    if (attrs.contentEl) {
+                        v.append($(attrs.contentEl).children());
+                        return;
+                    }
+                    
                     if (attrs.items && attrs.items.length > 0) {
                         var _fieldset = this._createContentInDialog(v, attrs.title);
 
@@ -544,28 +552,34 @@
                 },
                 _toggleShadow : function(attrs) {
                     var w = $("#dialog-shadow");
-                    if (w.hasClass("dialogshadow")) {
+                    if (w.hasClass("au-dialog-shadow")) {
                         if (w.is(":hidden")) {
                             this._resizeShadow(attrs,w);
                             w.show();
-                            $("body").children().not(".dialogshadow,.dialogpanel,script,style,link").addClass("blur");
+                            if(attrs.blur){
+                            	$("body").children().not(".au-dialog-shadow,.au-dialog-panel,script,style,link").addClass("au-dialog-blur");
+                            }
                         } else {
                             w.hide();
-                            $("body").children().not(".dialogshadow,.dialogpanel,script,style,link").removeClass("blur");
+                            if(attrs.blur){
+                            	$("body").children().not(".au-dialog-shadow,.au-dialog-panel,script,style,link").removeClass("au-dialog-blur");
+                            }
                         }
                     } else {
-                        w = $("<div id='dialog-shadow' class='dialogshadow' style='z-index: " + zIndex + ";'></div>");
+                        w = $("<div id='dialog-shadow' class='au-dialog-shadow' style='z-index: " + (zIndex - 1) + ";'></div>");
                         w.appendTo("body");
 
                         this._resizeShadow(attrs,w);
                         w.fadeTo(0, 0.49);
-                        $("body").children().not(".dialogshadow,.dialogpanel,script,style,link").addClass("blur");
+                        if(attrs.blur){
+                        	$("body").children().not(".au-dialog-shadow,.au-dialog-panel,script,style,link").addClass("au-dialog-blur");
+                        }
                     }
                     return w;
                 },
                 _resizeDialog : function(w, attrs) {
                     var padding = 15;
-
+                    var offsetLeft = attrs.offset ? (attrs.offset.left || 0) : 0, offsetTop = attrs.offset ? (attrs.offset.top || 0) : 0;
                     var bodywidth = $(window).width();
                     var bodyheight = $(window).height();
                     if (!attrs.width) {
@@ -581,11 +595,11 @@
                     w.css({
                         "width" : (attrs.width + 2 * padding) + "px",
                         "height" : (attrs.height + 2 * padding) + "px",
-                        left : marginleft / 2 + "px",
-                        top : margintop / 2 + "px"
+                        left : marginleft / 2 -offsetLeft + "px",
+                        top : margintop / 2 - offsetTop + "px"
                     });
 
-                    var c = w.find(".dialogclose"), v = w.find(".dialogview"), l = v.find('.dialogviewlayout'), f = l.find("iframe");
+                    var c = w.find(".au-dialog-close"), v = w.find(".au-dialog-view"), l = v.find('.au-dialog-view-layout'), f = l.find("iframe");
                     c.css({
                         right : "0px",
                         top : "0px",
@@ -606,7 +620,7 @@
                 },
                 _getMaxLevel:function(){
                     var level = 0;
-                    $(".dialogpanel").each(function(i,v,n){
+                    $(".au-dialog-panel").each(function(i,v,n){
                         var l = $(v).attr("level") * 1;
                         level = Math.max(level, l);
                     });
@@ -628,13 +642,15 @@
                     if (!attrs.model) {
                         this._toggleShadow(attrs);
                     }
-                    var w = $("#window-" + level);
-                    if (w.hasClass("dialogpanel")) {
-                        var l = w.find('.dialogviewlayout');
+                    var w = $("#window-" + level), initial = w.attr("initial");
+                    if (w.hasClass("au-dialog-panel") && initial == "true") {
+                        var l = w.find('.au-dialog-view-layout');
                         if (w.is(":hidden")) {
                             // 更改dialog内容
-                            l.empty();
-                            this._initDomInDialog(l, attrs);
+                        	if(attrs.destory){
+                        		l.empty();
+                        		this._initDomInDialog(l, attrs);
+                        	}
                             
                             //render listener
                             attrs.render && attrs.render.call(scope,w,l, attrs);
@@ -654,19 +670,30 @@
                             });
                         }
                     } else {
-                        w = $("<div id='window-" + level + "' level='" + level + "' class='dialogpanel' style='z-index : " + (zIndex + level * 10) + ";'></div>");
-                        var c = $("<div class='dialogclose' style='z-index : " + (zIndex + level * 10 + 9) + ";'></div>");
-                        var v = $("<div class='dialogview' style='z-index : " + (zIndex + level * 10 + 1) + ";'></div>");
-                        var l = $("<div class='dialogviewlayout'></div>");
-                        var e = $("<em class='dialogscrolltop' role='scroll-top' style='z-index : " + (zIndex + level * 10 + 9) + ";'><i class='glyphicon '></i></em>");//glyphicon-eject
+                    	var c = null, v = null, l = null, e = null;
+                        if(initial != "false"){
+                            w = $("<div id='window-" + level + "' level='" + level + "' class='au-dialog-panel' style='z-index : " + (zIndex + level * 10) + ";' initial='true'></div>");
+                            c = $("<div class='au-dialog-close' style='z-index : " + (zIndex + level * 10 + 9) + ";'></div>");
+                            v = $("<div class='au-dialog-view' style='z-index : " + (zIndex + level * 10 + 1) + ";'></div>");
+                            l = $("<div class='au-dialog-view-layout'></div>");
+                            e = $("<em class='au-dialog-scroll-top' role='scroll-top' style='z-index : " + (zIndex + level * 10 + 9) + ";'><i class='glyphicon '></i></em>");//glyphicon-eject
 
-                        w.appendTo("body");
-                        w.append(v);
-                        v.append(l);
-                        w.append(c);
-                        w.append(e);
-
-                        this._initDomInDialog(l, attrs);
+                            w.appendTo("body");
+                            w.append(v);
+                            v.append(l);
+                            w.append(c);
+                            w.append(e);
+                        }else{
+                            c = w.find(".au-dialog-close");
+                            v = w.find(".au-dialog-view");
+                            l = w.find(".au-dialog-view-layout");
+                            e = w.find(".au-dialog-scroll-top");
+                            w.attr("initial", "true");
+                            w.show();
+                        }
+                        if(attrs.destory){
+                        	this._initDomInDialog(l, attrs);
+                        }
 
                         //render listener
                         attrs.render && attrs.render.call(scope,w,l, attrs);
@@ -709,7 +736,7 @@
                     opts.container = $(opts.container);
                 }
             }else{
-               opts = $.extend({}, licoLoading.defaults, {container:this} , opts || {}); 
+               opts = $.extend({}, licoDialog.defaults, {container:this} , opts || {}); 
             }
             
             return (function() {
